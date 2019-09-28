@@ -1,8 +1,3 @@
-<html>
-<body>
-<div style="visibility:hidden">
-<%
-
 library("neuralnet")
 library(rjson)
 
@@ -11,7 +6,7 @@ library(rjson)
 #getwd()
 
 #Читаем данные для обучения нейросети
-mydata<- read.csv(file="/var/www/html/brew/data.csv", header=TRUE, sep=";")
+mydata<- read.csv(file="C:/Android/project/neural2/data.csv", header=TRUE, sep=";")
 #mydata<- read.csv(file="data.csv", header=TRUE, sep=";")
 mydata
 attach(mydata)
@@ -19,7 +14,7 @@ names(mydata)
 #print (mydata)
 
 #Загружаем прогнозируемые аргументы
-predict<- read.csv(file="/var/www/html/brew/predict.csv", header=FALSE, sep=";")
+predict<- read.csv(file="C:/Android/project/neural2/predict.csv", header=FALSE, sep=";")
 #predict<- read.csv(file="predict.csv", header=FALSE, sep=";")
 predict
 attach(predict)
@@ -60,12 +55,4 @@ cleanoutput <- cbind(testdata,testdata,
 colnames(cleanoutput) <- c("Input","Expected Output","Neural Net Output")
 #print(cleanoutput)
 
-%>
-</div>
-<div>
-<%
 cat(toJSON(net.results$net.result))
-%>
-</div>
-</body>
-</html>

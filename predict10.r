@@ -1,8 +1,3 @@
-<html>
-<body>
-<div style="visibility:hidden">
-<%
-
 library("neuralnet")
 library(rjson)
 
@@ -11,7 +6,7 @@ library(rjson)
 #getwd()
 
 #Читаем данные для обучения нейросети
-mydata<- read.csv(file="/var/www/html/brew/data.csv", header=TRUE, sep=";")
+mydata<- read.csv(file="C:/Android/project/neural2/data1.csv", header=TRUE, sep=";")
 #mydata<- read.csv(file="data.csv", header=TRUE, sep=";")
 mydata
 attach(mydata)
@@ -19,7 +14,7 @@ names(mydata)
 #print (mydata)
 
 #Загружаем прогнозируемые аргументы
-predict<- read.csv(file="/var/www/html/brew/predict.csv", header=FALSE, sep=";")
+predict<- read.csv(file="C:/Android/project/neural2/predict1.csv", header=FALSE, sep=";")
 #predict<- read.csv(file="predict.csv", header=FALSE, sep=";")
 predict
 attach(predict)
@@ -34,7 +29,7 @@ count<- nrow(predict)
 #Нейросеть имеет 10 слоёв
 #Threshold is a numeric value specifying the threshold for the partial
 #derivatives of the error function as stopping criteria.
-net.sqr <- neuralnet(OUTPUT~X1+X2+X3+X4+X5+Y1+Y2+Y3+Y4+Z1+Z2+Z3,mydata, hidden=10, threshold=0.01)
+net.sqr <- neuralnet(OUTPUT~INPUT,mydata, hidden=10, threshold=0.01)
 #net.sqr <- neuralnet(output ~ input, data.norm, hidden=10, threshold=0.01)
 
 #print(net.sqr)
@@ -44,10 +39,9 @@ net.sqr <- neuralnet(OUTPUT~X1+X2+X3+X4+X5+Y1+Y2+Y3+Y4+Z1+Z2+Z3,mydata, hidden=1
  
 #Прогнозирование
 testdata <- as.data.frame(predict) #Заносим прогнозируемые аргументы в переменную
-#colnames(testdata)<-c("X1","X2","X3","X4","X5","Y1","Y2","Y3","Y4","Z1","Z2","Z3")
-net.results <- compute(net.sqr, testdata[,1:12]) #Вычисляем значения функции на основании прогнозируемых переменных
-#net.results <- predict(net.sqr, testdata)
- 
+#colnames(testdata)<-c("INPUT")
+net.results <- compute(net.sqr, testdata) #Вычисляем значения функции на основании прогнозируемых переменных
+#net.results <- predict(net.sqr, testdata) 
 #Lets see what properties net.sqr has
 #ls(net.results)
  
@@ -60,12 +54,4 @@ cleanoutput <- cbind(testdata,testdata,
 colnames(cleanoutput) <- c("Input","Expected Output","Neural Net Output")
 #print(cleanoutput)
 
-%>
-</div>
-<div>
-<%
 cat(toJSON(net.results$net.result))
-%>
-</div>
-</body>
-</html>
