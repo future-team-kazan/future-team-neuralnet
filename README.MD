@@ -39,4 +39,4 @@ R, neuralnet, Rapache
 
 Все репозитирии команды: https://github.com/future-team-kazan
 * Репозиторий back-end https://github.com/future-team-kazan/future-team-back
-* Репозиторий с нейронной сетью для прогнозирования показателей https://github.com/future-team-kazan/future-team-neuralnet
+* Репозиторий UI https://github.com/future-team-kazan/future-team-ui
